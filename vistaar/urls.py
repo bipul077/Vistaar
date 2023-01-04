@@ -19,7 +19,7 @@ from django.urls.conf import re_path
 from products.views import HomeView,category_detail,privacy_policy,terms_conditions
 from django.conf import settings
 from django.conf.urls.static import static
-
+from reviews import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +27,7 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('products/', include('products.urls')),
     path('supplier/', include('suppliers.urls')),
+    path('submit_review/<int:product_id>',views.submit_review,name='submit_review'),
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('<int:id>/<slug:slug>/', category_detail,name='category_detail'),

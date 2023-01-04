@@ -391,6 +391,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.min.js"></script>
 
   <script>
+    {% for flashmsg in messages %}
+        alertify.set('notifier','position', 'bottom-right');
+        alertify.success('wow');
+    {% endfor %}
     $(document).ready(function () {
       $(".owl-carousel").owlCarousel({
         loop: true,

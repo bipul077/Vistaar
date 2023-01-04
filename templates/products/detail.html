@@ -249,12 +249,12 @@
 																<!--/ End Review -->
 																<!-- Form -->
 																<form class="form" action="{% url 'submit_review' product.id %}" method="POST">
-																	{% csrf token %}
+																	{% csrf_token %}
 																	<div class="row">
 																		<div class="col-lg-6 col-12">
 																			<div class="form-group">
 																				<label>Your Name<span>*</span></label>
-																				<input type="text" name="name" required="required" placeholder="">
+																				<input type="text" name="uname" required="required" placeholder="">
 																			</div>
 																		</div>
 																		<div class="col-lg-6 col-12">
@@ -266,7 +266,7 @@
 																		<div class="col-lg-12 col-12">
 																			<div class="form-group">
 																				<label>Write a review<span>*</span></label>
-																				<textarea name="message" rows="6" placeholder="" ></textarea>
+																				<textarea name="review" rows="6" placeholder="" ></textarea>
 																			</div>
 																		</div>
 																		<div class="col-lg-12 col-12">
@@ -275,7 +275,7 @@
 																			</div>
 																		</div>
 																	</div>
-																	{% include 'products/alerts.html' %}
+																	{% include 'products/alert.html' %}
 																</form>
 																<!--/ End Form -->
 															</div>
