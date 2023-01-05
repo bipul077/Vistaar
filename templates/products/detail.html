@@ -227,7 +227,11 @@
 																	</div>
 																	<!--/ End Single Rating -->
 																</div>
-																<!-- Review -->
+															
+																<!-- Form -->
+																<form class="form" action="{% url 'submit_review' product.id %}" method="POST">
+																	{% csrf_token %}
+																	<!-- Review -->
 																<div class="comment-review">
 																	<div class="add-review">
 																		<h5>Add A Review</h5>
@@ -237,19 +241,23 @@
 																	<div class="review-inner">
 																		<div class="ratings">
 																			<ul class="rating">
+																				<!-- <li><i class="fa fa-star"></i></li>
 																				<li><i class="fa fa-star"></i></li>
 																				<li><i class="fa fa-star"></i></li>
 																				<li><i class="fa fa-star"></i></li>
-																				<li><i class="fa fa-star"></i></li>
-																				<li><i class="fa fa-star"></i></li>
+																				<li><i class="fa fa-star"></i></li> -->
+																				<div class="rate">
+																					<input type="radio" name="rating" id="rating5" value="5" required /><label for="rating5" title="5"></label>
+																					<input type="radio" name="rating" id="rating4" value="4" required /><label for="rating4" title="4"></label>
+																					<input type="radio" name="rating" id="rating3" value="3" required /><label for="rating3" title="3"></label>
+																					<input type="radio" name="rating" id="rating2" value="2" required /><label for="rating2" title="2"></label>
+																					<input type="radio" name="rating" id="rating1" value="1" required /><label for="rating1" title="1"></label>
+																				</div>
 																			</ul>
 																		</div>
 																	</div>
 																</div>
 																<!--/ End Review -->
-																<!-- Form -->
-																<form class="form" action="{% url 'submit_review' product.id %}" method="POST">
-																	{% csrf_token %}
 																	<div class="row">
 																		<div class="col-lg-6 col-12">
 																			<div class="form-group">
@@ -275,7 +283,7 @@
 																			</div>
 																		</div>
 																	</div>
-																	{% include 'products/alert.html' %}
+																	<!-- {% include 'products/alert.html' %} -->
 																</form>
 																<!--/ End Form -->
 															</div>

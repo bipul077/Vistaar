@@ -2695,7 +2695,7 @@ Version:1.0
 }
 .shop.single .review-inner label {
 	display: inline-block;
-	margin: 0 5px 0 0;
+	margin: 0 0 0 0;
 }
 .shop.single .review-inner .ratings {
 	overflow: visible;
@@ -4946,6 +4946,46 @@ Version:1.0
 	color:#fff;
 	text-decoration:underline;
 }
+
 /*=============================
 	End Footer CSS
 ===============================*/
+/* user review & rating */
+/* For Customer Review */
+/* Hide Radio Button */
+.rate > input{
+    display: none;
+}
+.rate{
+    display: inline-block;
+    border: 0;
+}
+
+.rate > label{
+    float: right;
+	margin: 0;
+}
+/* Showing stars*/
+.rate > label:before{
+    display: inline-block;
+    font-size: 1.1rem;
+    font-family: FontAwesome;
+    content: "\f005";/*full star*/
+    margin: 0;
+    padding: 0.3rem .2rem;
+    cursor: pointer;
+}
+/* Half Star */
+.rate .half:before{
+    content: "\f089";
+    position: absolute;
+    padding-right: 0;
+}
+/* Click and hover */
+.row input:checked ~ label, label:hover ~ label{
+	color: #ffb503;
+}
+.row input:checked + label:hover, input:checked ~ label:hover,input:checked ~ label:hover ~ label,
+label:hover ~ input:checked ~ label{
+  color: #cc9000;
+}

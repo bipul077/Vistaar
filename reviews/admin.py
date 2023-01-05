@@ -4,5 +4,5 @@ from .models import Review
 
 # Register your models here.
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('id','uname','review', 'created_at', 'updated_at')
+    list_display = ('id','uname','review','rating')
 admin.site.register(Review, ReviewAdmin)
