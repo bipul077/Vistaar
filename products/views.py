@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import View, TemplateView, CreateView, FormView, DetailView, ListView
 from .models import Products,Category,Subcategory
+from reviews.models import Review
 from suppliers.models import Supplier
 from account.models import Primary_leads, Message_box, Lead_messages
 from cart.forms import CartAddProductForm
@@ -15,6 +16,7 @@ import datetime
 from django.db.models import Q
 # from account.views import send_lead_email
 import operator
+from django.db.models import Avg
 
 
 
@@ -51,7 +53,7 @@ class HomeView(TemplateView):
 
 def product_detail(request,id,slug):
     product = get_object_or_404(Products,id=id,slug=slug,available=True)
-
+    
     if request.method == 'POST':
 
         new_lead = Primary_leads(seller = product.supplier, buyer = request.user, product = product)
@@ -73,7 +75,10 @@ def product_detail(request,id,slug):
         product.save()
         pcategory = product.category
         cat = Products.objects.filter(category=pcategory)
-        return render(request,'products/detail.html',{'product':product,'cat':cat})
+        avg_reviews = Review.objects.filter(product=product).aggregate(avg_rating=Avg('rating'))#review rating ko average jhikalna use gareko aggregate
+        print("average" + str(avg_reviews))
+
+        return render(request,'products/detail.html',{'product':product,'cat':cat,'avr':avg_reviews})
 
 def category_detail(request,id,slug):
     category = get_object_or_404(Category,id=id,slug=slug)

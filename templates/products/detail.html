@@ -181,7 +181,14 @@
 															<div class="col-12">
 																<div class="ratting-main">
 																	<div class="avg-ratting">
-																		<h4>4.5 <span>(Overall)</span></h4>
+																		<h4>
+																			{% if avr.avg_rating %}
+																				{{avr.avg_rating|floatformat:1}}/5
+																			{% else %}
+																				0/5
+																			{% endif %}
+																			<span>(Overall)</span>
+																		</h4>
 																		<span>Based on 1 Comments</span>
 																	</div>
 																	<!-- Single Rating -->

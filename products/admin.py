@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category,Products,Subcategory,Review
+from .models import Category,Products,Subcategory
 
 # Register your models here.
 
@@ -21,9 +21,6 @@ class ProductAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('title',)}
 
-class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('id','uname','subject', 'created_at', 'updated_at')
-admin.site.register(Review, ReviewAdmin)
 
 
 

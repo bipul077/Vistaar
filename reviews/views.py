@@ -30,6 +30,7 @@ def submit_review(request,product_id):
             data.review = form.cleaned_data['review']
             data.rating = form.cleaned_data['rating']
             print(data.uname,data.email,data.review,data.rating)
+            
             # data.rating = form.cleaned_data['rating']
             data.ip = request.META.get('REMOTE_ADDR')#gets the ip address of the site
             data.product_id= product_id
@@ -37,5 +38,5 @@ def submit_review(request,product_id):
             print("done")
             messages.success(request, 'Thank you! Your review has been submitted')
             return redirect(url)
-    return redirect(url)
+    # return redirect(url)
         
