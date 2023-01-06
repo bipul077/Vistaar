@@ -77,8 +77,11 @@ def product_detail(request,id,slug):
         cat = Products.objects.filter(category=pcategory)
         avg_reviews = Review.objects.filter(product=product).aggregate(avg_rating=Avg('rating'))#review rating ko average jhikalna use gareko aggregate
         print("average" + str(avg_reviews))
+        
+        #counts the review
+        reviewcounter = Review.objects.filter(product=product).count()
 
-        return render(request,'products/detail.html',{'product':product,'cat':cat,'avr':avg_reviews})
+        return render(request,'products/detail.html',{'product':product,'cat':cat,'avr':avg_reviews,'revcount':reviewcounter})
 
 def category_detail(request,id,slug):
     category = get_object_or_404(Category,id=id,slug=slug)

@@ -72,14 +72,24 @@
 											<div class="short">
 												<h4>{{product.product_name}}</h4>
 												<div class="rating-main">
-													<ul class="rating">
+													<!-- <ul class="rating">
 														<li><i class="fa fa-star"></i></li>
 														<li><i class="fa fa-star"></i></li>
 														<li><i class="fa fa-star"></i></li>
 														<li><i class="fa fa-star-half-o"></i></li>
 														<li class="dark"><i class="fa fa-star-o"></i></li>
-													</ul>
-													<a href="#" class="total-review">(102) Review</a>
+													</ul> -->
+													{% if avr.avg_rating %}
+														{% for star in avr.avg_rating|floatformat:1|ljust:avr.avg_rating %}
+															<i class="fa fa-star green-color"></i>                    
+														{% endfor %}
+														
+														{% if avr.avg_rating > 1 and avr.avg_rating < 2 %}<span class="fa fa-star-half-o green-color" aria-hidden="true"></span>{% endif %}
+														{% if avr.avg_rating > 2 and avr.avg_rating < 3 %}<span class="fa fa-star-half-o green-color" aria-hidden="true"></span>{% endif %}
+														{% if avr.avg_rating > 3 and avr.avg_rating < 4 %}<span class="fa fa-star-half-o green-color" aria-hidden="true"></span>{% endif %}
+														{% if avr.avg_rating > 4 and avr.avg_rating < 5 %}<span class="fa fa-star-half-o green-color" aria-hidden="true"></span>{% endif %}
+													{% endif %}
+													<a href="#" class="total-review">({{revcount}}) Review</a>
 												</div>
 												<p class="price"><span class="discount">Rs. {{product.price}}{% if product.max_price and product.max_price != 0 %} - Rs. {{ product.max_price }}{% endif %}</span> </p>
 												<p class="description"><b>Minimum Order Quantity: {{product.minimum_order_quantity}}</b></p>
@@ -189,7 +199,7 @@
 																			{% endif %}
 																			<span>(Overall)</span>
 																		</h4>
-																		<span>Based on 1 Comments</span>
+																		<span>Based on {{revcount}} Comments</span>
 																	</div>
 																	<!-- Single Rating -->
 																	<div class="single-rating">
