@@ -1,0 +1,28 @@
+{% for p in products %}
+        <div class="box-card product">
+            <div class="content">
+                <a href="{{ p.get_absolute_url }}" class="text-decoration-none text-dark">
+                    <p class="fs-6">{{ p.product_name }}</p>
+                </a>
+            </div>
+            <div class="imgBx">
+                <a href="{{ p.get_absolute_url }}">
+                    <img src="{{ p.image.url }}" class="img-fluid" alt="">
+                </a>
+            </div>
+            <div class="content">
+                <div class="d-flex justify-content-between align-items-center my-1">
+                    <div class="price">
+                        <strong class="">Rs. {{p.price}}{% if p.max_price and p.max_price != 0 %} - Rs. {{ p.max_price }}{% endif %}</strong>
+                        <!--span>
+                            <del>Rs. 9000</del>
+                        </span-->
+                    </div>
+                    <div class="order">
+                        <a href="{{ p.get_absolute_url }}" class="badge bg-danger text-decoration-none">Order</a>
+                    </div>
+                </div>
+                <p class="supplier mb-0">Supplied By: <i>{{ p.supplier }}</i></p>
+            </div>
+        </div>
+{% endfor %}

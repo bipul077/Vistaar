@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+from . import views
 app_name = 'products'
 
 urlpatterns = [
@@ -13,7 +13,6 @@ urlpatterns = [
     path('edit_product/<int:id>/', edit_product, name='edit_product'),
 
     path("search/", SearchView.as_view(), name="search"),
-
     path("keywords_data/", keyword_data,name="keyword_data"),
 ]
 

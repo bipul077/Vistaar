@@ -19,7 +19,8 @@ from django.urls.conf import re_path
 from products.views import HomeView,category_detail,privacy_policy,terms_conditions
 from django.conf import settings
 from django.conf.urls.static import static
-from reviews import views
+from reviews.views import submit_review
+from products.views import filter_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,12 +28,14 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('products/', include('products.urls')),
     path('supplier/', include('suppliers.urls')),
-    path('submit_review/<int:product_id>',views.submit_review,name='submit_review'),
+    path('submit_review/<int:product_id>',submit_review,name='submit_review'),
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('<int:id>/<slug:slug>/', category_detail,name='category_detail'),
     path('privacy-policy', privacy_policy,name='privacy_policy'),
     path('terms-conditions', terms_conditions,name='terms_conditions'),
+    path("filter-data/",filter_data,name="filter_data"),
+
 ]
 
 

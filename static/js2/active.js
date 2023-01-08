@@ -322,3 +322,64 @@ Version:1.0
 	}, 2000); //Here you can change preloader time
 	 
 })(jQuery);
+
+// Filter Product According to the price
+$("#maxPrice").on('blur',function(){
+    console.log("wowowowow");
+    var _min=$(this).attr('min');
+    var _max=$(this).attr('max');
+    var _value=$(this).val();
+    console.log(_value,_min,_max);
+    if(_value < parseInt(_min) || _value > parseInt(_max)){
+        alert('Values should be between '+_min+'-'+_max);
+        $(this).val(_min);
+        $(this).focus();
+        $("#rangeInput").val(_min);
+        return false;
+    }
+});
+function filter(){
+	var _minPrice = $('#maxPrice').attr('min');//gives the minimum price of the product
+	var _actualPrice = $('#maxPrice').val();//gives the actual price of the product which user has given to price filter max box
+    var sortval = $('#sort').val();
+	console.log(sortval);
+	var filterObj = {};
+    filterObj.minPrice=_minPrice;
+	filterObj.actualPrice=_actualPrice;
+	filterObj.sortVal = sortval;
+    var url = "/filter-data";
+    $(".form-check-input").each(function(index,ele){//looping for each iteration
+        var filterkey = $(this).attr('data-filter');
+        console.log(filterkey);
+        filterObj[filterkey]=Array.from(document.querySelectorAll('input[data-filter='+filterkey+']:checked')).map(function(el){//filterobj vane array ma click gareko filter ko id pass garauna hamile esto use gareko
+            return el.value;// returns category id
+       });
+    });
+    console.log(filterObj)
+
+    $.ajax({
+        url:url,
+        data:filterObj,
+        dataType:'json',
+        beforeSend:function(){//It will show things until we get the response from server
+            // $(".ajaxloading").show();
+        },
+        success:function(res){
+            console.log("success");
+            $("#categorylists").html(res.data);//views.py bata render_to_string lai eta dekhaunxa productlists vane div class ko html vitra
+            // $(".ajaxloading").hide();
+        }
+
+    });
+}
+
+// for filtering price of product list
+$(".form-check-input,#priceFilterBtn").on('click',function(){//implementing this script with two different selectors one is category checkbox and another one is price
+    console.log("checkbox clicked");
+    filter();
+});
+
+$(".sort").on('change',function(){
+	console.log("changed");
+	filter();
+});

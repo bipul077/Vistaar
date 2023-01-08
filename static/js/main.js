@@ -25,7 +25,6 @@ $(document).ready(function () {
         ]
     });
 });
-
 //  Featured Product
 $(document).ready(function () {
     var slider = $("#featured-slider").lightSlider({
@@ -72,6 +71,7 @@ $(document).ready(function () {
         speed: 600,
         controls: false
     });
+  
 });
 
 // Image Show
@@ -88,3 +88,4 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+

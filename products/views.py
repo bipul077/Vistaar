@@ -16,7 +16,8 @@ import datetime
 from django.db.models import Q
 # from account.views import send_lead_email
 import operator
-from django.db.models import Avg
+from django.template.loader import render_to_string
+from django.db.models import Count,Min,Max,Avg
 
 
 
@@ -85,10 +86,12 @@ def product_detail(request,id,slug):
 
 def category_detail(request,id,slug):
     category = get_object_or_404(Category,id=id,slug=slug)
-    
+    allcat = Category.objects.all()
     products = Products.objects.filter(category=category)
-    
-    return render(request, 'category.html',{'category':category,'products':products})
+    categories = Category.objects.annotate(num_products=Count('products'))
+    minmaxprice = Products.objects.aggregate(Min('price'),Max('price'))
+    print(minmaxprice)
+    return render(request, 'category.html',{'category':category,'products':products,'allcat':categories,'minmaxprice':minmaxprice})
     
 def subcategory_detail(request,id,slug):
     subcategory = get_object_or_404(Subcategory,id=id,slug=slug)
@@ -257,3 +260,32 @@ def keyword_data(request):
 
     sorted_d = dict(sorted(key_dict.items(), key=operator.itemgetter(1),reverse=True))
     return render(request,'admin/keyword_data.html',{'keywords':key_dict})
+
+
+#filterproducts
+def filter_data(request):
+    cats = request.GET.getlist('category[]')
+    print(cats)#returns list of brand id
+    # category = Category.objects.get(id=cat_id)
+    minprice = request.GET['minPrice']
+    actprice = request.GET['actualPrice']
+    sortval = request.GET['sortVal']
+    print(minprice,actprice,sortval)
+    if sortval == "lst":
+        allproducts = Products.objects.all().order_by('-id').distinct()
+    elif sortval == "LTH":
+        allproducts = Products.objects.all().order_by('price').distinct()#order_by('-id') gives recent first,distinct helps to omit duplicate products
+    else:
+        allproducts = Products.objects.all().order_by('-price').distinct()
+    allproducts = allproducts.filter(price__gte=minprice)
+    allproducts = allproducts.filter(price__lte=actprice)
+    catcount = allproducts.count()
+    if len(cats)>0:#in other words if category exist
+        allproducts = allproducts.filter(category__id__in=cats).distinct()
+        catcount = allproducts.count()
+        print(allproducts)
+    t = render_to_string('ajax/category.html',# creates template to the string and returning product list page to t variable with the help of render_to_string
+        {
+            'products':allproducts,
+        })
+    return JsonResponse({'data':t,'catcount':catcount})

@@ -62,8 +62,38 @@
 {% block content %}
     <div class="container pt-5">
         <div class="row">
+            <!-- done by bipul for filter -->
+            <div class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <!-- minmaxprice is received from template_context.py -->
+                    <input class="w-100" type="range" id="rangeInput" value="{{minmaxprice.price__max}}" min={{minmaxprice.price__min}} max={{minmaxprice.price__max}} oninput="maxPrice.value=this.value" />
+                    <!-- id rangeInput depends upon onkeyup rangeInput so that when we type the price in max box it shows in price range too>
+                     id maxPrice depends upon oninput maxPrice so that when we move the price range it shows in max box too -->
+                    <p class="text-center">{{minmaxprice.price__min|floatformat:0}} - {{minmaxprice.price__max|floatformat:0}}</p>
+                </li>
+                <li class="list-group-item">
+                    Max: <input type="number" value="{{minmaxprice.price__max}}" min={{minmaxprice.price__min}} max={{minmaxprice.price__max}} id="maxPrice" onkeyup="rangeInput.value=this.value"/>
+                    <button id="priceFilterBtn" class="btn btn-info btn-sm" style="margin-top: -2px;">Filter</button>
+                </li>
+            </div>
+            <div class="brand p-2 mt-3">
+                <div class="heading d-flex justify-content-between align-items-center">
+                    <h6 class="text-uppercase"><span id="cthree">Category</span></h6> <span>--</span>
+                </div>
+                {% for c in allcat %}
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="form-check"> <input class="form-check-input" data-filter="category" type="checkbox" value="{{c.id}}" id="flexCheckDefault11"> <label class="form-check-label" for="flexCheckDefault11"> <span id="op9">{{c.title}}</span> </label> </div> <span>{{c.num_products}}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            <select name="sort" id="sort" class="sort px-1 py-1 ml-2">
+                <option value="lst">Latest</option>
+                <option value="LTH">Price:Low to High</option>
+                <option value="HTL">Price:High to Low</option>
+            </select>
             <div class="col-md-8 order-md-2 col-lg-9">
                 <div class="container-fluid">
+                    
                     <!--div class="row   mb-5">
                         <div class="col-12">
                             <div class="dropdown text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
@@ -111,7 +141,7 @@
                                 {{ category.title }}
                             </span>
                         </div>
-                        <div class="row justify-content-sm-start justify-content-center px-2">
+                        <div class="row justify-content-sm-start justify-content-center px-2" id="categorylists">
                             {% for p in products %}
                             <!-- 1------------------- -->
                             <div class="box-card product">
